@@ -31,6 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install rustfmt and clippy
+        run: rustup component add rustfmt clippy
+
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: backend
