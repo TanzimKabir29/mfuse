@@ -1,0 +1,20 @@
+# Copy to terraform.tfvars and fill in real values. terraform.tfvars is
+# gitignored — it will contain live credentials.
+
+render_api_key  = "your-render-api-key"
+render_owner_id = "your-render-owner-id"
+render_region   = "oregon"
+
+github_repo_url = "https://github.com/you/mfuse"
+
+neon_api_key   = "your-neon-api-key"
+neon_region_id = "aws-us-east-2"
+
+google_client_id     = "your-client-id.apps.googleusercontent.com"
+google_client_secret = "your-client-secret"
+
+# Leave these three blank for the first apply — see the bootstrap steps
+# above each one in variables.tf.
+google_redirect_url = ""
+frontend_origin      = ""
+backend_api_url      = ""

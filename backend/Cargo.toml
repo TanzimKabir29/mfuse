@@ -1,0 +1,28 @@
+[package]
+name = "mfuse"
+version = "0.1.0"
+edition = "2024"
+description = "One-time, expiring secret sharing with client-side encryption"
+license-file = "../LICENSE"
+publish = false
+
+[dependencies]
+axum = "0.8"
+serde = {version="1", features=["derive"]}
+serde_json = "1"
+tokio = { version = "1", features = ["full"]}
+uuid = {version="1", features=["v7", "serde", "v4"]}
+sqlx = { version = "0.9", features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "chrono", "macros", "migrate"] }
+chrono = { version = "0.4", features = ["serde"] }
+dotenvy = "0.15"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tower-http = { version = "0.7", features = ["trace", "set-header", "cors"] }
+oauth2 = { version = "5", features = ["reqwest"] }
+axum-extra = { version = "0.12", features = ["cookie"] }
+reqwest = { version = "0.12", features = ["json"] }
+time = "0.3"
+thiserror = "2"
+tower_governor = "0.8"
+subtle = "2"
+base64 = "0.23"
