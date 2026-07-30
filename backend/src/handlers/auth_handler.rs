@@ -143,7 +143,7 @@ pub async fn google_callback(
             Cookie::build(("session_id", session_id.to_string()))
                 .http_only(true)
                 .secure(true)
-                .same_site(SameSite::Lax)
+                .same_site(SameSite::None)
                 .path("/")
                 .max_age(time::Duration::days(7))
                 .build(),

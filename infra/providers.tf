@@ -12,10 +12,7 @@ terraform {
     }
   }
 
-  # Local state is fine to start with. Once you've created a GCS or S3 bucket
-  # for state (a one-time step — Terraform can't create the very bucket it
-  # would store its own state in), uncomment a backend block here and run
-  # `terraform init -migrate-state` to move state there instead of your disk.
+  # Local state by default — see README.md's "Remote state" section.
   # backend "s3" {
   #   bucket = "your-terraform-state-bucket"
   #   key    = "mfuse/terraform.tfstate"
