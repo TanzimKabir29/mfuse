@@ -72,10 +72,8 @@ Neon and the frontend static site aren't affected by this bug and stay Terraform
 **If a resource is already in Terraform's state and you want to stop managing it, deleting its
 block from `main.tf` is not enough on its own.** Terraform's whole model is "make reality match
 config" — if state says a resource exists but the config no longer mentions it, the next `apply`
-concludes it should be destroyed, and destroys the real thing. This actually happened once already:
-removing `render_web_service` from `main.tf` without first running
-`terraform state rm render_web_service.mfuse` meant the following `apply` (for an unrelated static
-site change) deleted the live backend service. The correct order is always: `terraform state rm
+concludes it should be destroyed, and destroys the real thing, even if the block you removed was
+unrelated to what you're actually trying to change. The correct order is always: `terraform state rm
 <resource>` first (removes it from Terraform's bookkeeping only, touches nothing real), *then*
 delete the block from the `.tf` file.
 
