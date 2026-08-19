@@ -53,6 +53,7 @@ function SecretViewPage() {
     fetchMutation.error.status === 404;
   const requiresPassphrase = !!fetchMutation.data?.passphrase_salt;
   const awaitingPassphrase = requiresPassphrase && !decryptMutation.isSuccess;
+  const isSpent = decryptMutation.isSuccess || isConsumed;
 
   function handlePassphraseSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -64,6 +65,11 @@ function SecretViewPage() {
   return (
     <div className="min-h-screen bg-canvas text-ink flex items-center justify-center p-6">
       <div className="w-full max-w-lg flex flex-col gap-4 text-center">
+        <img
+          src={isSpent ? "/fuse-cut.svg" : "/favicon.svg"}
+          alt=""
+          className="w-24 h-24 mx-auto"
+        />
         <h1 className="text-2xl font-semibold">Secret</h1>
 
         {fetchMutation.status === "idle" && (

@@ -23,6 +23,7 @@ function LoginPage() {
     <div className="min-h-screen bg-canvas text-ink flex items-center justify-center p-6">
       <div className="w-full max-w-sm flex flex-col items-center gap-6 text-center">
         <div>
+          <img src="/favicon.svg" alt="" className="w-16 h-16 mx-auto mb-3" />
           <h1 className="text-3xl font-semibold tracking-tight">MFuse</h1>
           <p className="mt-1 text-ink-muted text-sm">
             Every secret has a fuse.
