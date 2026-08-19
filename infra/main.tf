@@ -17,4 +17,15 @@ resource "render_static_site" "mfuse" {
   env_vars = {
     VITE_API_BASE_URL = { value = var.backend_api_url } # baked in at build time
   }
+
+  # SPA fallback: client-side routes like /s/:id aren't real files, so a
+  # fresh navigation to one needs this to reach index.html instead of a 404.
+  # Render checks for a real file first, so this doesn't affect actual assets.
+  routes = [
+    {
+      source      = "/*"
+      destination = "/index.html"
+      type        = "rewrite"
+    }
+  ]
 }

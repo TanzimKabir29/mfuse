@@ -69,6 +69,16 @@ tier works fine, no card, and still auto-deploys on push once it exists. So rath
 hosting providers over it, the backend is just created once by hand instead of through Terraform.
 Neon and the frontend static site aren't affected by this bug and stay Terraform-managed.
 
+**If a resource is already in Terraform's state and you want to stop managing it, deleting its
+block from `main.tf` is not enough on its own.** Terraform's whole model is "make reality match
+config" — if state says a resource exists but the config no longer mentions it, the next `apply`
+concludes it should be destroyed, and destroys the real thing. This actually happened once already:
+removing `render_web_service` from `main.tf` without first running
+`terraform state rm render_web_service.mfuse` meant the following `apply` (for an unrelated static
+site change) deleted the live backend service. The correct order is always: `terraform state rm
+<resource>` first (removes it from Terraform's bookkeeping only, touches nothing real), *then*
+delete the block from the `.tf` file.
+
 ## Other things confirmed the hard way
 
 `terraform validate` confirms the configuration is well-formed against the real provider schemas
@@ -83,6 +93,11 @@ API:
 - **Render's region list** (`frankfurt`, `ohio`, `oregon`, `singapore`, `virginia`) and **Neon's
   region ID format** are just strings from each provider's docs, not enums Terraform validates.
   Double check `neon_region_id` against Neon's current region list before applying.
+- **The static site needs an explicit SPA-fallback rewrite.** Without it, a fresh navigation
+  straight to a client-side route like `/s/:id` 404s at the host level, before React Router ever
+  loads — confirmed by actually clicking a generated link. `main.tf`'s `routes` block rewrites
+  anything that isn't a real file to `/index.html`; Render checks for a real file first, so this
+  doesn't interfere with the actual JS/CSS assets loading normally.
 
 ## Remote state
 
